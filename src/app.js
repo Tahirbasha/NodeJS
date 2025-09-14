@@ -10,11 +10,16 @@ app.use('/welcome', (req, res) => {
     res.send('Welcome to node js');
 });
 
-app.use('/users', (req, res) => {
-    res.send('Generic');
-});
+// app.use('/users', (req, res) => {
+//     res.send('Generic');
+// });
 
 app.get('/users', (req, res) => {
+    console.log(req.query);
+    res.send('Get users');
+});
+app.get('/users/:userId', (req, res) => {
+    console.log(req.params);
     res.send('Get users');
 });
 
