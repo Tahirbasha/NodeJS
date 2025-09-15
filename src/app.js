@@ -40,3 +40,20 @@ app.get('/getUserByName', async (req, res) => {
         res.status(400).send("Something went wrong");
     }
 })
+
+app.delete('/delete', async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.body.userId);
+        res.send("User delete successfully");
+    } catch (err) {
+        res.status(400).send("Something went wrong");
+    }
+})
+app.patch('/update', async (req, res) => {
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.body.userId, req.body, { returnDocument: "after" });
+        res.send("User updated successfully:", updatedUser);
+    } catch (err) {
+        res.status(400).send("Something went wrong");
+    }
+})
