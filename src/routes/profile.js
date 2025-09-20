@@ -41,12 +41,19 @@ profileRouter.delete('/delete', async (req, res) => {
         res.status(400).send("Something went wrong");
     }
 })
-profileRouter.patch('/update', async (req, res) => {
+profileRouter.patch('/update', authUser, async (req, res) => {
     try {
-        const updatedUser = await User.findByIdAndUpdate(req.body.userId, req.body, { returnDocument: "after" });
-        res.send("User updated successfully:", updatedUser);
+        const user = req.user;
+        const canBeUpdatedFields = ['firstName', 'lastName', 'city', 'age'];
+        const isValidUpdate = Object.keys(req.body).every(e => canBeUpdatedFields.includes(e));
+        if (!isValidUpdate) {
+            throw new Error("Invalid update.")
+        }
+        canBeUpdatedFields.forEach(e => user[e] = req.body[e]);
+        await user.save();
+        res.send("User updated successfully:", user);
     } catch (err) {
-        res.status(400).send("Something went wrong");
+        res.status(400).send("Something went wrong" + err);
     }
 })
 
