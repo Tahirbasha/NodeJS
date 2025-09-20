@@ -11,9 +11,9 @@ const ConnectionModel = new mongoose.Schema({
     },
     status: {
         type: String,
-        // Enumration
+        // Enumeration
         enum: {
-            values: ['interested', 'ignored', 'approved', 'rejected'],
+            values: ['interested', 'ignored', 'approve', 'reject'],
             message: `{VALUE} is not valid.`
         }
     }
