@@ -1,6 +1,7 @@
 const express = require('express');
 const ConnectReqModel = require('../models/connection-model');
 const { authUser } = require("../utils/middlewares/auth");
+const User = require('../models/user-model');
 
 const connectionRouter = express.Router();
 
@@ -12,8 +13,12 @@ connectionRouter.post('/sendConnection/:status/:toUserId', authUser, async (req,
         if (!toUser) {
             throw new Error("Invalid connection to be sent user.")
         }
-        const connectionReq = await ConnectReqModel.findOne({ toUserId });
-        console.log('connectionReq: ', connectionReq)
+        const connectionReq = await ConnectReqModel.findOne({
+            $or: [
+                { toUserId },
+                { fromUserId: toUserId }
+            ]
+        });
         if (connectionReq) {
             throw new Error(`The ${status} request already sent to ${toUser.firstName}.`)
         }

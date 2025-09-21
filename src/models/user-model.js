@@ -34,15 +34,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "Hyderabad"
     },
-    age: {
-        type: Number,
-        min: 10,
-        max: 100,
+    about: {
+        type: String,
+        max: 500,
+        required: true
+    },
+    gender: {
+        type: String,
         required: true,
-        validate(value) {
-            if (isNaN(value)) {
-                throw new Error("Required Numeric value")
-            }
+        enum: {
+            values: ['male', 'female', 'others'],
+            message: `{VALUE} is not valid.`
         }
     },
 }, { timestamps: true });

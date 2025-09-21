@@ -8,6 +8,7 @@ const authUser = async (req, res, next) => {
     }
     const decodedToken = await jwt.verify(token, "MYSECRETKEY");
     const { userId } = decodedToken;
+    console.log('User: ', User)
     const user = await User.findOne({ _id: userId });
     if (!user) {
         throw new Error("Invalid User, please register");

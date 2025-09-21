@@ -12,7 +12,8 @@ authRouters.post('/signup', async (req, res) => {
             emailId: req.body.emailId,
             password: hashedPassword,
             city: req.body.city,
-            age: req.body.age,
+            gender: req.body.gender,
+            about: req.body.about,
         });
         await user.save();
         res.send("User created successfully");
