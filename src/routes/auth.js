@@ -22,7 +22,7 @@ authRouters.post('/signup', async (req, res) => {
     }
 });
 
-authRouters.get('/login', async (req, res) => {
+authRouters.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ emailId: req.body.emailId });
         if (!user) {
@@ -34,7 +34,7 @@ authRouters.get('/login', async (req, res) => {
         }
         const token = await user.getJwt();
         res.cookie("token", token);
-        res.send("Login successful")
+        res.send({ data: user })
     } catch (err) {
         res.status(400).send(String(err));
     }

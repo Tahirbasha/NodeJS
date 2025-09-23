@@ -4,7 +4,7 @@ const User = require("../../models/user-model")
 const authUser = async (req, res, next) => {
     const { token } = req.cookies
     if (!token) {
-        throw new Error("Invalid Authorization Token");
+        res.status(401).send("Invalid Authorization Token")
     }
     const decodedToken = await jwt.verify(token, "MYSECRETKEY");
     const { userId } = decodedToken;
