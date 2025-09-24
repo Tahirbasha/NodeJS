@@ -26,6 +26,9 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
+    photoUrl: {
+        type: String,
+    },
     password: {
         type: String,
         required: true,

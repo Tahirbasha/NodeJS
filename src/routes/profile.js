@@ -44,14 +44,14 @@ profileRouter.delete('/delete', async (req, res) => {
 profileRouter.patch('/update', authUser, async (req, res) => {
     try {
         const user = req.user;
-        const canBeUpdatedFields = ['firstName', 'lastName', 'city', 'about'];
+        const canBeUpdatedFields = ['firstName', 'lastName', 'city', 'about', 'photoUrl', 'gender'];
         const isValidUpdate = Object.keys(req.body).every(e => canBeUpdatedFields.includes(e));
         if (!isValidUpdate) {
             throw new Error("Invalid update.")
         }
         canBeUpdatedFields.forEach(e => user[e] = req.body[e]);
         await user.save();
-        res.send("User updated successfully:", user);
+        res.send({ message: "User updated successfully:", data: user });
     } catch (err) {
         res.status(400).send("Something went wrong" + err);
     }
