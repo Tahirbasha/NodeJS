@@ -5,7 +5,7 @@ const User = require('../models/user-model');
 
 const { authUser } = require('../utils/middlewares/auth')
 
-const USER_SAFE_COLUMNS = ["firstName", "lastName", "about", "city"]
+const USER_SAFE_COLUMNS = ["firstName", "lastName", "about", "city", "photoUrl"]
 userRouter.get('/user/requests', authUser, async (req, res) => {
     try {
         const loggedInUser = req.user;

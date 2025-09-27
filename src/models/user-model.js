@@ -40,11 +40,9 @@ const userSchema = new mongoose.Schema({
     about: {
         type: String,
         max: 500,
-        required: true
     },
     gender: {
         type: String,
-        required: true,
         enum: {
             values: ['male', 'female', 'others'],
             message: `{VALUE} is not valid.`

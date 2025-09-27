@@ -15,8 +15,10 @@ authRouters.post('/signup', async (req, res) => {
             gender: req.body.gender,
             about: req.body.about,
         });
-        await user.save();
-        res.send("User created successfully");
+        await user.save();  
+         const token = await user.getJwt();
+        res.cookie("token", token);
+        res.send({ message: "User created successfully", data: user });
     } catch (err) {
         res.status(400).send(String(err));
     }
